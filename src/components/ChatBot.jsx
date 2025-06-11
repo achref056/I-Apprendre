@@ -26,28 +26,19 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/chat",
-        {
-          model: "gpt-3.5-turbo",
-          messages: updatedMessages,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("http://localhost:5000/api/chat", {
+        messages: updatedMessages,
+      });
 
       const reply = response.data.choices[0].message.content.trim();
       setMessages([...updatedMessages, { role: "assistant", content: reply }]);
     } catch (error) {
-      console.error("Erreur GPT-3 :", error);
+      console.error("Erreur GPT-3 :", error.response?.data || error.message);
       setMessages([
         ...updatedMessages,
         {
           role: "assistant",
-          content: "Une erreur est survenue lors de l'appel à GPT-3.",
+          content: "Une erreur est survenue lors de la réponse de l'IA.",
         },
       ]);
     } finally {
