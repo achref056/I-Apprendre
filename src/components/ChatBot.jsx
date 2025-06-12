@@ -26,7 +26,7 @@ export default function ChatBot() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/chat", {
+      const response = await axios.post("https://TON_BACKEND.onrender.com/api/chat", {
         messages: updatedMessages,
       });
 
